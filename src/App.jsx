@@ -1,373 +1,380 @@
-import React, { useState, useEffect } from 'react';
+// src/App.jsx
+import { useState } from 'react';
 import './App.css';
+import logo from './assets/vineeth pass photo.jpg';
+import logo1 from './assets/vineeth.png';
+import netflix from './assets/netflix.png';
+import micro from './assets/micro.png';
+import google from './assets/google.png';
+import amazon from './assets/amazon.png';
 
 function App() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [darkMode, setDarkMode] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-  const downloadResume = () => {
-    const resumeContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Naramshetty Vineethkumar - Resume</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 40px; }
-          h1 { color: #2c3e50; }
-          h2 { color: #3498db; margin-top: 20px; }
-          .section { margin-bottom: 20px; }
-          .contact-info, .education, .experience, .skills { line-height: 1.6; }
-          ul { list-style-type: none; padding-left: 0; }
-          li { margin: 5px 0; }
-        </style>
-      </head>
-      <body>
-        <h1>Naramshetty Vineethkumar</h1>
-        <div class="contact-info">
-          <p>Email: naramshettyvineethkumar@gmail.com</p>
-          <p>Phone: (+91) 6305271785</p>
-          <p>LinkedIn: linkedin.com/in/naramshetty-vineeth-kumar</p>
-          <p>Address: Suryapet, Telangana, India, 508213</p>
-        </div>
-
-        <div class="section">
-          <h2>About Me</h2>
-          <p>BTech student at Sreenidhi Institute of Science and Technology with a keen interest in web development and embedded systems. Born on April 4, 2004, I strive to create innovative solutions using modern technologies.</p>
-        </div>
-
-        <div class="section">
-          <h2>Education</h2>
-          <div class="education">
-            <strong>BTech</strong> - Sreenidhi Institute of Science and Technology<br>
-            07/11/2022 - Current | Hyderabad, India | EQF Level 6<br><br>
-            <strong>Intermediate</strong> - TSRJC, Thungathurthy<br>
-            Score: 983/1000 | Thungathurthy, India<br><br>
-            <strong>SSC</strong> - Sri Vyshnavi High School, Kodad<br>
-            GPA: 10/10 | Kodad, India
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Experience</h2>
-          <div class="experience">
-            <strong>Intern</strong> - Nobel PBS<br>
-            February 2025 - Present | India<br><br>
-            <strong>Intern</strong> - Emertxe<br>
-            08/01/2025 - 28/02/2025 | Online, India
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Projects</h2>
-          <ul>
-            <li><strong>Microoven Simulation</strong> - Simulation of a microwave oven using PICSimLab (08/01/2025 - 28/02/2025)</li>
-            <li><strong>Google Clone</strong> - Front-end replica of Google homepage using HTML and CSS</li>
-            <li><strong>Netflix Clone</strong> - Responsive Netflix-inspired interface using HTML and CSS</li>
-            <li><strong>Amazon Clone</strong> - E-commerce inspired web interface using HTML and CSS</li>
-          </ul>
-        </div>
-
-        <div class="section">
-          <h2>Skills</h2>
-          <div class="skills">
-            <strong>Digital Skills:</strong> HTML, CSS, Python, C Programming, Digital Logic Design, CMOS, MATLAB (Basic), Tina-TI (Basic), AI<br>
-            <strong>Soft Skills:</strong> Active Listening, Empathy, Emotional Intelligence, Team Work, Time Management, Problem Solving<br>
-            <strong>Languages:</strong> Telugu (Native), English
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
-
-    const blob = new Blob([resumeContent], { type: 'text/html' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Naramshetty_Vineethkumar_Resume.html';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  };
-
-  useEffect(() => {
-    const sections = document.querySelectorAll('.section');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
-  }, []);
 
   return (
-    <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
-      {/* Header */}
-      <header className="header">
-        <h1>Naramshetty Vineethkumar</h1>
-        <nav>
-          <a href="#home" className={activeSection === 'home' ? 'active' : ''}>Home</a>
-          <a href="#about" className={activeSection === 'about' ? 'active' : ''}>About</a>
-          <a href="#education" className={activeSection === 'education' ? 'active' : ''}>Education</a>
-          <a href="#experience" className={activeSection === 'experience' ? 'active' : ''}>Experience</a>
-          <a href="#projects" className={activeSection === 'projects' ? 'active' : ''}>Projects</a>
-          <a href="#skills" className={activeSection === 'skills' ? 'active' : ''}>Skills</a>
-          <a href="#contact" className={activeSection === 'contact' ? 'active' : ''}>Contact</a>
-          <button onClick={toggleTheme} className="theme-toggle">
-            {isDarkMode ? '☀️' : '🌙'}
-          </button>
-        </nav>
-      </header>
-
-      {/* Home Section */}
-      <section id="home" className="section home-section">
-        <div className="home-content">
-          <img 
-            src="vineethai.png" 
-            alt="Welcome illustration" 
-            className="home-image"
-          />
-          <div className="home-text">
-            <h2>Welcome!</h2>
-            <p>Hello! I'm Naramshetty Vineethkumar, a passionate developer and student.</p>
-            <marquee behavior="scroll" direction="left" className="marquee">
-              Web Development | Embedded Systems | Innovative Solutions | BTech Student
-            </marquee>
-            <button onClick={downloadResume} className="resume-button">
-              Download Resume
+    <div className={`min-h-screen font-sans ${darkMode ? 'bg-[#f4a261] text-white' : 'bg-gray-100 text-gray-900'}`}>
+      {/* Navigation Bar */}
+      <nav className={`shadow-md fixed w-full top-0 z-50 ${darkMode ? 'bg-[#e76f51]' : 'bg-white'}`}>
+        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className={`text-2xl font-bold ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+            Naramshetty Vineethkumar
+          </h1>
+          <div className="flex items-center space-x-6">
+            <a href="#home" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>Home</a>
+            <a href="#education" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>Education</a>
+            <a href="#skills" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>Skills</a>
+            <a href="#experience" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>Experience</a>
+            <a href="#about" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>About</a>
+            <a href="#projects" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>Projects</a>
+            <a href="#contact" className={`hover:text-[#264653] ${darkMode ? 'text-white' : 'text-gray-600'}`}>Contact</a>
+            <button
+              onClick={toggleDarkMode}
+              className={`p-2 rounded-full ${darkMode ? 'bg-[#264653] text-white' : 'bg-gray-300'}`}
+              aria-label="Toggle Dark Mode"
+            >
+              {darkMode ? '☀️' : '🌙'}
             </button>
           </div>
         </div>
-      </section>
+      </nav>
 
-      {/* About Section */}
-      <section id="about" className="section about-section">
-        <h2>About Me</h2>
-        <div className="about-content">
-          <div className="about-card">
-            <img 
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4aIOgsv7BKJblhD55Rfl9mz4a-4110FgdEA&s" 
-              alt="Naramshetty Vineethkumar" 
-              className="about-image"
+      {/* Home Section */}
+      <section
+        id="home"
+        className={`pt-24 pb-16 flex items-center justify-center min-h-screen ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+      >
+        <div className="flex space-x-8 max-w-4xl">
+          <div className="w-1/2">
+            <h2 className={`text-4xl mb-4`}>
+              Welcome, I'm <br /> <pre className={`inline font-bold ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'} typing-animation`}> N Vineeth kumar </pre>
+            </h2>
+            <p className="text-xl mb-6">
+              A passionate BTech student and Front-End Developer from Sreenidhi Institute of Science and Technology, Hyderabad. Explore my work and get to know me!
+            </p>
+          </div>
+          <div className="w-1/2 flex justify-center">
+            <img
+              src={logo}
+              alt="Naramshetty Vineethkumar"
+              className="w-64 h-64 rounded-full shadow-lg object-cover border-4 border-[#264653]"
             />
-            <div className="about-details">
-              <p>
-                I'm a passionate BTech student at Sreenidhi Institute of Science and Technology with a keen interest in 
-                web development and embedded systems.
-              </p>
-              <p>Born: April 4, 2004</p>
-              <p>Home: Suryapet, Telangana, India, 508213</p>
-              <p>I strive to create innovative solutions using modern technologies.</p>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Education Section */}
-      <section id="education" className="section">
-        <h2>Education</h2>
-        <div className="education-content">
-          <h3>BTech</h3>
-          <p>Sreenidhi Institute of Science and Technology</p>
-          <p>07/11/2022 - Current</p>
-          <p>Hyderabad, India | EQF Level 6</p>
-          <a href="http://www.sreenidhi.edu.in" target="_blank" rel="noopener noreferrer">
-            www.sreenidhi.edu.in
-          </a>
-        </div>
-        <div className="education-content">
-          <h3>Intermediate</h3>
-          <p>TSRJC, Thungathurthy</p>
-          <p>Score: 983/1000</p>
-          <p>Thungathurthy, India</p>
-        </div>
-        <div className="education-content">
-          <h3>SSC</h3>
-          <p>Sri Vyshnavi High School, Kodad</p>
-          <p>GPA: 10/10</p>
-          <p>Kodad, India</p>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="section">
-        <h2>Work Experience</h2>
-        <div className="experience-content">
-          <h3>Intern</h3>
-          <p>Nobel PBS</p>
-          <p>February 2025 - Present</p>
-          <p>India</p>
-        </div>
-        <div className="experience-content">
-          <h3>Intern</h3>
-          <p>Emertxe</p>
-          <p>08/01/2025 - 28/02/2025</p>
-          <p>Online, India</p>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="section">
-        <h2>Projects</h2>
-        <div className="projects-grid">
-          <div className="project-card">
-            <h3>Microoven Simulation</h3>
-            <p>Simulation of a microwave oven using PICSimLab platform with GUI control panel</p>
-            <p>08/01/2025 - 28/02/2025</p>
+      <section
+        id="education"
+        className={`py-16 ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+      >
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className={`text-3xl font-bold mb-8 text-center ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+            Education
+          </h2>
+          {/* BTech */}
+          <div className={`rounded-lg shadow-md p-6 mb-6 hover:shadow-lg transition-shadow ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <h3 className="text-xl font-semibold mb-2">BTech</h3>
+            <p className="text-lg mb-2"><strong>Institution:</strong> Sreenidhi Institute of Science and Technology</p>
+            <p className="text-lg mb-2"><strong>Duration:</strong> 07/11/2022 - Current</p>
+            <p className="text-lg mb-2"><strong>Location:</strong> Hyderabad, India</p>
+            <p className="text-lg mb-2"><strong>Level:</strong> EQF Level 6</p>
+            <p className="text-lg">
+              <strong>Website:</strong>{' '}
+              <a href="https://www.sreenidhi.edu.in" className={`${darkMode ? 'text-[#264653] hover:text-white' : 'text-[#f4a261] hover:text-[#e76f51]'}`} target="_blank" rel="noopener noreferrer">
+                www.sreenidhi.edu.in
+              </a>
+            </p>
           </div>
-          <div className="project-card">
-            <h3>Google Clone</h3>
-            <p>Front-end replica of Google homepage using HTML and CSS</p>
-            <a href="https://vineethkumar-google-clone.netlify.app" className="project-link" target="_blank" rel="noopener noreferrer">
-              View Project
-            </a>
+          {/* TSBIE */}
+          <div className={`rounded-lg shadow-md p-6 mb-6 hover:shadow-lg transition-shadow ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <h3 className="text-xl font-semibold mb-2">Intermediate (TSBIE)</h3>
+            <p className="text-lg mb-2"><strong>Institution:</strong> TSRJC Thungathurthy</p>
+            <p className="text-lg mb-2"><strong>Result:</strong> 983/1000</p>
+            <p className="text-lg mb-2"><strong>Completion Year:</strong> 2022</p>
+            <p className="text-lg mb-2"><strong>Location:</strong> Thungathurthy, Telangana, India</p>
           </div>
-          <div className="project-card">
-            <h3>Netflix Clone</h3>
-            <p>Responsive Netflix-inspired interface using HTML and CSS</p>
-            <a href="https://vineeth-kumar-netfix.netlify.app/" className="project-link" target="_blank" rel="noopener noreferrer">
-              View Project
-            </a>
-          </div>
-          <div className="project-card">
-            <h3>Amazon Clone</h3>
-            <p>E-commerce inspired web interface using HTML and CSS</p>
+          {/* SSC */}
+          <div className={`rounded-lg shadow-md p-6 mb-6 hover:shadow-lg transition-shadow ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <h3 className="text-xl font-semibold mb-2">Secondary School Certificate (SSC)</h3>
+            <p className="text-lg mb-2"><strong>Institution:</strong> Sri Vyshnavi High School</p>
+            <p className="text-lg mb-2"><strong>Result:</strong> 10 GPA</p>
+            <p className="text-lg mb-2"><strong>Completion Year:</strong> 2020</p>
+            <p className="text-lg mb-2"><strong>Location:</strong> Kodad, Telangana, India</p>
           </div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="section">
-        <h2>Skills</h2>
-        <div className="skills-container">
-          <div className="skills-card">
-            <h3>Digital Skills</h3>
-            <ul className="skills-list">
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>Python</li>
-              <li>C Programming</li>
-              <li>Digital Logic Design</li>
-              <li>CMOS</li>
-              <li>MATLAB (Basic)</li>
-              <li>Tina-TI (Basic)</li>
-              <li>AI</li>
-            </ul>
+<section
+  id="skills"
+  className={`py-16 ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+>
+  <div className="max-w-4xl mx-auto px-4">
+    <h2
+      className={`text-3xl font-bold mb-8 text-center ${
+        darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'
+      }`}
+    >
+      Skills
+    </h2>
+    <div className="flex flex-wrap justify-center gap-6">
+      {[
+        { name: 'HTML', img: 'https://e7.pngegg.com/pngimages/780/934/png-clipart-html-logo-html5-logo-icons-logos-emojis-tech-companies-thumbnail.png' },
+        { name: 'CSS', img: 'https://upload.wikimedia.org/wikipedia/commons/6/62/CSS3_logo.svg' },
+        { name: 'React', img: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg' },
+        { name: 'C programming', img: 'https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png' },
+        { name: 'Python', img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg' },
+        { name: 'PHP', img: 'https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg' },
+        { name: 'Tailwind CSS', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg' },
+        { name: 'Bootstrap', img: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg' },
+      ].map((skill, index) => (
+        <div
+          key={index}
+          className={`rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex flex-col items-center w-48 ${
+            darkMode ? 'bg-[#e76f51]' : 'bg-white'
+          }`}
+        >
+          <div className="w-24 h-24 mb-4 flex items-center justify-center">
+            <img
+              src={skill.img}
+              alt={`${skill.name} logo`}
+              className="max-w-full max-h-full object-contain rounded-full"
+            />
           </div>
-          <div className="skills-card">
-            <h3>Soft Skills</h3>
-            <ul className="skills-list">
-              <li>Active Listening</li>
-              <li>Empathy</li>
-              <li>Emotional Intelligence</li>
-              <li>Team Work</li>
-              <li>Time Management</li>
-              <li>Problem Solving</li>
-            </ul>
+          <h3 className="text-xl font-semibold mb-2">{skill.name}</h3>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+      {/* Experience Section */}
+      <section
+        id="experience"
+        className={`py-16 ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+      >
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className={`text-3xl font-bold mb-8 text-center ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+            Experience
+          </h2>
+          <div className={`rounded-lg shadow-md p-6 mb-6 hover:shadow-lg transition-shadow flex items-center ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <div className="w-40 h-32 bg-gray-300 rounded-full flex items-center justify-center mr-6">
+              <span className="text-gray-600 text-sm text-center">
+                <img src="https://yt3.ggpht.com/ytc/AKedOLQAtvbe-N3etxrAGmqwuVWlAZIyIpUu1u1Ctm4=s900-c-k-c0x00ffffff-no-rj" alt="Emertxe lgo" className="rounded-full w-40" />
+              </span>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold mb-2">Intern</h3>
+              <p className="text-lg mb-2"><strong>Company:</strong> Emertxe</p>
+              <p className="text-lg mb-2"><strong>Duration:</strong> 08/01/2025 - 28/02/2025</p>
+              <p className="text-lg mb-2"><strong>Location:</strong> Online, India</p>
+              <p className="text-lg"><strong>Description:</strong> Gained hands-on experience in embedded systems and software development during an online internship.</p>
+            </div>
           </div>
-          <div className="skills-card">
-            <h3>Languages</h3>
-            <ul className="skills-list">
-              <li>Telugu (Native)</li>
-              <li>English</li>
-            </ul>
+          <div className={`rounded-lg shadow-md p-6 mb-6 hover:shadow-lg transition-shadow flex items-center ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <div className="w-40 h-32 bg-gray-300 rounded-full flex items-center justify-center mr-6">
+              <span className="text-gray-600 text-sm text-center">
+                <img src="https://media.licdn.com/dms/image/v2/D560BAQHKj7Awmq4pDg/company-logo_200_200/company-logo_200_200/0/1693215023031/nobel_community_logo?e=2147483647&v=beta&t=Sd4PwV4kViOgSyPDbxxkzBPJs-i-ulDyzW7kaydJIRs" alt="Nobel PBC lgo" className="rounded-full w-40" />
+              </span>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold mb-2">Intern</h3>
+              <p className="text-lg mb-2"><strong>Company:</strong> Nobel PBC</p>
+              <p className="text-lg mb-2"><strong>Duration:</strong> Feb 2025 - present</p>
+              <p className="text-lg mb-2"><strong>Location:</strong> Online, India</p>
+              <p className="text-lg"><strong>Description:</strong> Gained Networking, Teamwork, fundamentals on wordpress, confidence during an online internship.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Me Section */}
+      <section
+        id="about"
+        className={`py-16 ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+      >
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className={`text-3xl font-bold mb-8 text-center ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+            About Me
+          </h2>
+          <div className={`rounded-lg shadow-md p-6 ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
+              <div className="flex-shrink-0">
+                <img
+                  src={logo}
+                  alt="Naramshetty Vineethkumar"
+                  className="w-32 h-32 md:w-48 md:h-48 rounded-full shadow-lg object-cover border-4 border-[#264653]"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="text-lg mb-4">
+                  I’m Naramshetty Vineethkumar, a BTech student at Sreenidhi Institute of Science and Technology, Hyderabad. Born on 04/04/2004 in Suryapet, India, I’m passionate about front-end development, embedded systems and VLSI.
+                </p>
+                <p className="text-lg">
+                  I’ve worked as an intern at Emertxe, honing skills in C programming and learned how to use simulation tools like Pic simLab. I enjoy teamwork, problem-solving, and speak Telugu and English. In my free time, I play chess, watch movies, and read comics.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section
+        id="projects"
+        className={`py-16 ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+      >
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className={`text-3xl font-bold mb-8 text-center ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+            Projects
+          </h2>
+          <div className="grid grid-cols-1 gap-6 relative">
+            {/* Microoven Simulation */}
+            <div className={`rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex items-start rotate-1 z-10 ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+              <div className="w-100 h-48 bg-gray-300 rounded mr-6 flex-shrink-0">
+                <span className="text-gray-600 text-sm flex items-center justify-center h-full">
+                <img src={micro} alt="Netflix output" className='w-100 h-48 rounded'/>
+                </span>
+              </div>
+              <div className="flex-1 flex flex-col items-center">
+                <h3 className={`text-xl font-semibold mb-2 ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+                  Microoven Simulation
+                </h3>
+                <p className="text-lg mb-2 text-center">Simulated a microwave oven using PICSimLab with a GUI interface.</p>
+                <p className="text-lg text-center"><strong>Technologies:</strong> PICSimLab, MPLAB XIDE</p>
+              </div>
+            </div>
+            {/* Google Clone */}
+            <div className={`rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex items-start -rotate-1 z-20 -mt-8 ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+              <div className="w-100 h-48 bg-gray-300 rounded mr-6 flex-shrink-0">
+                <span className="text-gray-600 text-sm flex items-center justify-center h-full">
+                <img src={google} alt="Google output" className='w-100 h-48 rounded'/>
+                </span>
+              </div>
+              <div className="flex-1 flex flex-col items-center">
+                <h3 className={`text-xl font-semibold mb-2 ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+                  Google Clone
+                </h3>
+                <p className="text-lg mb-2 text-center">Recreated Google's homepage with clean design.</p>
+                <p className="text-lg mb-2 text-center"><strong>Technologies:</strong> HTML, CSS</p>
+                <a href="https://vineethkumar-google-clone.netlify.app" className={`${darkMode ? 'text-[#264653] hover:text-white' : 'text-[#f4a261] hover:text-[#e76f51]'}`} target="_blank" rel="noopener noreferrer">
+                  View Project
+                </a>
+              </div>
+            </div>
+            {/* Netflix Clone */}
+            <div className={`rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex items-start rotate-1 z-30 -mt-8 ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+              <div className="w-100 h-48 bg-gray-300 rounded mr-6 flex-shrink-0">
+                <span className="text-gray-600 text-sm flex items-center justify-center h-full">
+                  <img src={netflix} alt="Netflix output" className='w-100 h-48 rounded'/>
+                </span>
+              </div>
+              <div className="flex-1 flex flex-col items-center">
+                <h3 className={`text-xl font-semibold mb-2 ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+                  Netflix Clone
+                </h3>
+                <p className="text-lg mb-2 text-center">Built a Netflix-inspired interface with responsive design.</p>
+                <p className="text-lg mb-2 text-center"><strong>Technologies:</strong> HTML, CSS</p>
+                <a href="https://vineeth-kumar-netflix.netlify.app/" className={`${darkMode ? 'text-[#264653] hover:text-white' : 'text-[#f4a261] hover:text-[#e76f51]'}`} target="_blank" rel="noopener noreferrer">
+                  View Project
+                </a>
+              </div>
+            </div>
+            {/* Amazon Clone */}
+            <div className={`rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow flex items-start -rotate-1 z-40 -mt-8 ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+              <div className="w-100 h-48 bg-gray-300 rounded mr-6 flex-shrink-0">
+                <span className="text-gray-600 text-sm flex items-center justify-center h-full">
+                <img src={amazon} alt="Amazon output" className='w-100 h-48 rounded'/>
+                </span>
+              </div>
+              <div className="flex-1 flex flex-col items-center">
+                <h3 className={`text-xl font-semibold mb-2 ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+                  Amazon Clone
+                </h3>
+                <p className="text-lg mb-2 text-center">Developed an Amazon-inspired e-commerce interface.</p>
+                <p className="text-lg mb-2 text-center"><strong>Technologies:</strong> HTML, CSS</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section">
-        <h2>Contact</h2>
-        <div className="contact-content">
-          <div className="contact-info-card">
-            <h3>Get in Touch</h3>
-            <div className="contact-details">
-              <p><span className="contact-icon">✉️</span> naramshettyvineethkumar@gmail.com</p>
-              <p><span className="contact-icon">📞</span> (+91) 6305271785</p>
-              <p><span className="contact-icon">💬</span> WhatsApp: 6305271785</p>
-              <p><span className="contact-icon">🔗</span> 
-                <a href="linkedin.com/in/naramshetty-vineeth-kumar" target="_blank" rel="noopener noreferrer">
-                  LinkedIn
+      <section
+        id="contact"
+        className={`py-16 ${darkMode ? 'bg-[#f4a261]' : 'bg-gray-100'}`}
+      >
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className={`text-3xl font-bold mb-8 text-center ${darkMode ? 'text-[#2a9d8f]' : 'text-[#f4a261]'}`}>
+            Contact Me
+          </h2>
+          <div className={`rounded-lg shadow-md p-6 ${darkMode ? 'bg-[#e76f51]' : 'bg-white bg-opacity-70'}`}>
+            <div className="mb-6">
+              <p className="text-lg mb-2"><strong>Phone:</strong> (+91) 6305271785</p>
+              <p className="text-lg mb-2"><strong>Email:</strong> naramshettyvineethkumar@gmail.com</p>
+              <p className="text-lg mb-2"><strong>WhatsApp:</strong> 6305271785</p>
+              <div className="flex space-x-4 mt-4 justify-center">
+                <a href="https://www.linkedin.com/in/naramshetty-vineeth-kumar" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <img src="https://openvisualfx.com/wp-content/uploads/2019/10/linkedin-icon-logo-png-transparent.png" alt="LinkedIn" className="w-15 h-12" />
                 </a>
-              </p>
+                <a href="https://github.com/N-Vineethkumar" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <img src="https://w7.pngwing.com/pngs/646/324/png-transparent-github-computer-icons-github-logo-monochrome-head-thumbnail.png" alt="GitHub" className="w-15 h-12" />
+                </a>
+                <a href="https://www.instagram.com/n_vineeth_kumar_" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <img src="https://i.pinimg.com/1200x/24/37/73/2437730f7e3a5705e205e67fa2cd1020.jpg" alt="Instagram" className="w-15 h-12 rounded-full" />
+                </a>
+              </div>
             </div>
+            <form className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-lg font-semibold mb-2">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className={`w-full p-3 rounded-lg border ${darkMode ? 'bg-[#f4a261] text-white border-[#264653]' : 'bg-white text-gray-900 border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]`}
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-lg font-semibold mb-2">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className={`w-full p-3 rounded-lg border ${darkMode ? 'bg-[#f4a261] text-white border-[#264653]' : 'bg-white text-gray-900 border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]`}
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-lg font-semibold mb-2">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  className={`w-full p-3 rounded-lg border ${darkMode ? 'bg-[#f4a261] text-white border-[#264653]' : 'bg-white text-gray-900 border-gray-300'} focus:outline-none focus:ring-2 focus:ring-[#2a9d8f]`}
+                  placeholder="Your Message"
+                  required
+                ></textarea>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className={`px-6 py-3 rounded-lg font-semibold text-white ${darkMode ? 'bg-[#264653] hover:bg-[#2a9d8f]' : 'bg-[#f4a261] hover:bg-[#e76f51]'} transition-colors`}
+                >
+                  Send Message
+                </button>
+              </div>
+            </form>
           </div>
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <h3>Send a Message</h3>
-            <div className="form-group">
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Your Name"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Your Email"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Your Message"
-                required
-                rows="4"
-              />
-            </div>
-            <button type="submit" className="submit-button">Send Message</button>
-          </form>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>© 2025 Naramshetty Vineethkumar. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
