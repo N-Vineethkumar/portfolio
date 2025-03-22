@@ -6,7 +6,7 @@ import logo1 from './assets/vineeth.png';
 import netflix from './assets/netflix.png';
 import micro from './assets/micro.png';
 import google from './assets/google.png';
-import amazon from './assets/amazon.png';
+import amazon from './assets/Amazon.png';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
